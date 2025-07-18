@@ -1,43 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://cb1h10j5d82q1"]
+[gd_scene load_steps=2 format=3 uid="uid://cb1h10j5d82q1"]
 
-[ext_resource type="Script" uid="uid://dhb08tdp634nr" path="res://autoload/audio_manager/audio_manager.gd" id="1_418ss"]
-[ext_resource type="AudioStream" uid="uid://caxuqo05p8ydn" path="res://autoload/audio_manager/streams/jump_start_sound.tres" id="2_veri3"]
-[ext_resource type="AudioStream" uid="uid://7os2arlxy4cd" path="res://autoload/audio_manager/streams/flip_start_sound.tres" id="3_1ir50"]
-[ext_resource type="AudioStream" uid="uid://bluwbemhs0yfv" path="res://autoload/audio_manager/streams/flip_fail_sound.tres" id="4_hu6y8"]
-[ext_resource type="AudioStream" uid="uid://qfes175o2ukj" path="res://autoload/audio_manager/streams/flip_end_sound.tres" id="5_1hc2h"]
-[ext_resource type="AudioStream" uid="uid://b7t16b4ocipy8" path="res://autoload/audio_manager/streams/jump_end_sound.tres" id="6_1hc2h"]
-[ext_resource type="AudioStream" uid="uid://qt6aw5hea4xs" path="res://autoload/audio_manager/streams/buy_sound.tres" id="7_180s8"]
-[ext_resource type="AudioStream" uid="uid://ddkjtj65vrxh0" path="res://autoload/audio_manager/streams/cant_buy_sound.tres" id="8_b4cw0"]
-[ext_resource type="AudioStream" uid="uid://bwom5lrmf83dn" path="res://assets/sounds/bgm_main.ogg" id="9_b4cw0"]
-[ext_resource type="AudioStream" uid="uid://cwij0wypkkclu" path="res://assets/sounds/bgm_skill_tree.ogg" id="10_d6pjd"]
-[ext_resource type="AudioStream" uid="uid://dkhhb76fa28du" path="res://assets/sounds/ancient_game_fantasy_exliar_touch.wav" id="11_iwjvn"]
-[ext_resource type="AudioStream" uid="uid://cpi1hsfkhnwmu" path="res://assets/sounds/confirm_click_13.wav" id="12_tn4hp"]
-[ext_resource type="AudioStream" uid="uid://8cvbn6tai1u2" path="res://assets/sounds/error_click_10.wav" id="13_2d5ut"]
-[ext_resource type="AudioStream" uid="uid://bogcj6yoccj5e" path="res://assets/sounds/achievement.wav" id="14_2d5ut"]
-[ext_resource type="AudioStream" uid="uid://di2hrbx0cv47t" path="res://assets/sounds/zapsplat_horror_monster_swamp_huge_menacing_growl_slimy_bubbles_003_47858.wav" id="15_yt718"]
-[ext_resource type="AudioStream" uid="uid://bt08fmo8588xb" path="res://assets/sounds/smartsound_FOLEY_GORE_Tear_Bone_And_Flesh_01.wav" id="16_ljgh5"]
-[ext_resource type="AudioStream" uid="uid://c7oiq7ru13m5r" path="res://assets/sounds/zapsplat_sound_design_whoosh_wind_magical_fast_005_98027.wav" id="17_7gwo0"]
-[ext_resource type="AudioStream" uid="uid://dkmqt8hx6jkc7" path="res://assets/sounds/smartsound_MUSICAL_HORROR_Haunted_Strings_Tinkle_Sequence_Slow_Short_03.wav" id="18_7kt7h"]
+[ext_resource type="Script" uid="uid://dhb08tdp634nr" path="res://addons/godot-utils/audio_manager/audio_manager.gd" id="1_418ss"]
 
 [node name="AudioManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_418ss")
-audio_data = Dictionary[String, AudioStream]({
-"achievement": ExtResource("14_2d5ut"),
-"bgm_main": ExtResource("9_b4cw0"),
-"bgm_skill_tree": ExtResource("10_d6pjd"),
-"buy_sound": ExtResource("7_180s8"),
-"camera_zoom_whoosh": ExtResource("17_7gwo0"),
-"cant_buy_sound": ExtResource("8_b4cw0"),
-"creepy": ExtResource("18_7kt7h"),
-"flip_end_sound": ExtResource("5_1hc2h"),
-"flip_fail_sound": ExtResource("4_hu6y8"),
-"flip_start_sound": ExtResource("3_1ir50"),
-"jump_end_sound": ExtResource("6_1hc2h"),
-"jump_start_sound": ExtResource("2_veri3"),
-"monster_roar": ExtResource("15_yt718"),
-"mouth_rip": ExtResource("16_ljgh5"),
-"skill_decr": ExtResource("13_2d5ut"),
-"skill_incr": ExtResource("12_tn4hp"),
-"visitor_spawn": ExtResource("11_iwjvn")
-})

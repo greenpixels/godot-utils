@@ -1,13 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://dbu7cb0h10jdt"]
+[gd_scene load_steps=3 format=3 uid="uid://dbu7cb0h10jdt"]
 
-[ext_resource type="PackedScene" uid="uid://dbh6jrpcqwj76" path="res://godot_tooltip_component_by_greenpixels/lib/core/tooltip/tooltip.tscn" id="1_2rq01"]
-[ext_resource type="Script" uid="uid://d15ib6snxn55r" path="res://godot_tooltip_component_by_greenpixels/lib/core/resources/tooltip_highlighted_key.gd" id="1_b7kxr"]
-[ext_resource type="Texture2D" uid="uid://c5oisy2lojesk" path="res://items/interactables/coin/small_coin/small_coin_icon.tres" id="2_p6pyn"]
-[ext_resource type="Texture2D" uid="uid://b2thaw67bi12c" path="res://items/interactables/coin/medium_coin/medium_coin_icon.tres" id="3_0e0k5"]
-[ext_resource type="Texture2D" uid="uid://kdnhqyc6lkjv" path="res://items/interactables/coin/large_coin/large_coin_icon.tres" id="4_wq47i"]
-[ext_resource type="Script" uid="uid://c2f4gxienkpu6" path="res://godot_tooltip_component_by_greenpixels/lib/core/resources/tooltip_explanation.gd" id="5_l17k5"]
-[ext_resource type="Texture2D" uid="uid://b7nv8d5ccwuf3" path="res://items/interactables/coin/platinum_coin/platinum_coin_icon.tres" id="5_vtss3"]
-[ext_resource type="Texture2D" uid="uid://bil0jsj0ghwcv" path="res://items/interactables/coin/diamond_coin/diamond_coin_icon.tres" id="6_l17k5"]
+[ext_resource type="PackedScene" uid="uid://dbh6jrpcqwj76" path="res://addons/godot-utils/tooltip/tooltip.tscn" id="1_2rq01"]
 
 [sub_resource type="GDScript" id="GDScript_5jax0"]
 resource_name = "TooltipOverlay"
@@ -46,7 +39,6 @@ func conceal():
 	TweenHelper.tween(\"tooltip_container_scale\", layout_wrapper).tween_property(layout_wrapper, \"scale\", Vector2(0, 1), 0.05).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func describe(origin_node: Control, content: String, show_extra_explanation = false):
-	if LimboManager.should_hide_tooltips: return
 	var origin_x_position = 0
 	if origin_node:
 		origin_x_position = origin_node.global_position.x
@@ -115,93 +107,9 @@ func __cleanup():
 	explanations = []
 "
 
-[sub_resource type="Resource" id="Resource_c6qqo"]
-script = ExtResource("1_b7kxr")
-key = "currency"
-color = Color(0.905521, 0.575046, 3.85046e-07, 1)
-tr_key = "CURRENCY"
-
-[sub_resource type="Resource" id="Resource_1svhy"]
-script = ExtResource("1_b7kxr")
-key = "small_coin"
-icon = ExtResource("2_p6pyn")
-color = Color(0.894118, 0.713726, 0.498039, 1)
-tr_key = "SMALL_COIN_NAME"
-
-[sub_resource type="Resource" id="Resource_agcpr"]
-script = ExtResource("1_b7kxr")
-key = "medium_coin"
-icon = ExtResource("3_0e0k5")
-color = Color(0.839216, 0.870588, 0.937255, 1)
-tr_key = "MEDIUM_COIN_NAME"
-
-[sub_resource type="Resource" id="Resource_1n0sx"]
-script = ExtResource("1_b7kxr")
-key = "large_coin"
-icon = ExtResource("4_wq47i")
-color = Color(0.976471, 0.882353, 0.380392, 1)
-tr_key = "LARGE_COIN_NAME"
-
-[sub_resource type="Resource" id="Resource_l5jvc"]
-script = ExtResource("1_b7kxr")
-key = "coins"
-color = Color(0.958026, 0.673786, 3.85046e-07, 1)
-tr_key = "COINS_NAME"
-
-[sub_resource type="Resource" id="Resource_4y2op"]
-script = ExtResource("1_b7kxr")
-key = "helper"
-color = Color(0.438742, 0.773065, 1, 1)
-tr_key = "HELPER_NAME"
-
-[sub_resource type="Resource" id="Resource_na1pg"]
-script = ExtResource("1_b7kxr")
-key = "prestige_point"
-color = Color(1, 0.270588, 0.898039, 1)
-tr_key = "PRESTIGE_POINT_NAME"
-metadata/_custom_type_script = "uid://d15ib6snxn55r"
-
-[sub_resource type="Resource" id="Resource_vtss3"]
-script = ExtResource("1_b7kxr")
-key = "skill_tree"
-color = Color(1, 0.105882, 0, 1)
-tr_key = "SKILL_TREE_NAME"
-metadata/_custom_type_script = "uid://d15ib6snxn55r"
-
-[sub_resource type="Resource" id="Resource_sib0x"]
-script = ExtResource("5_l17k5")
-explanation_tr_key = "NO_KEY"
-should_remove_key = false
-metadata/_custom_type_script = "uid://c2f4gxienkpu6"
-
-[sub_resource type="Resource" id="Resource_q1rhw"]
-script = ExtResource("1_b7kxr")
-key = "platinum_coin"
-icon = ExtResource("5_vtss3")
-color = Color(0, 0.504184, 0.999964, 1)
-tr_key = "PLATINUM_COIN_NAME"
-explanation = SubResource("Resource_sib0x")
-metadata/_custom_type_script = "uid://d15ib6snxn55r"
-
-[sub_resource type="Resource" id="Resource_v202g"]
-script = ExtResource("1_b7kxr")
-key = "diamond_coin"
-icon = ExtResource("6_l17k5")
-color = Color(0, 0.862745, 0.776471, 1)
-tr_key = "DIAMOND_COIN_NAME"
-metadata/_custom_type_script = "uid://d15ib6snxn55r"
-
-[sub_resource type="Resource" id="Resource_m4s55"]
-script = ExtResource("1_b7kxr")
-key = "lucky_echo"
-color = Color(0.949164, 0.560718, 1, 1)
-tr_key = "SKILL_LUCKY_ECHO_NAME"
-metadata/_custom_type_script = "uid://d15ib6snxn55r"
-
 [node name="TooltipOverlay" type="CanvasLayer"]
 layer = 5
 script = SubResource("GDScript_5jax0")
-highlighted_keys = Array[ExtResource("1_b7kxr")]([SubResource("Resource_c6qqo"), SubResource("Resource_1svhy"), SubResource("Resource_agcpr"), SubResource("Resource_1n0sx"), SubResource("Resource_l5jvc"), SubResource("Resource_4y2op"), SubResource("Resource_na1pg"), SubResource("Resource_vtss3"), SubResource("Resource_q1rhw"), SubResource("Resource_v202g"), SubResource("Resource_m4s55")])
 tooltip_transition_type = 11
 
 [node name="LayoutWrapper" type="MarginContainer" parent="."]

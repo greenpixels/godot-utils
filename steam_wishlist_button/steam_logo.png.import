@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dffqggltani6r"
-path="res://.godot/imported/empty.png-2737f5f17bd2c929eedd00658eb69175.ctex"
+uid="uid://bim2dw4bh5pp3"
+path="res://.godot/imported/steam_logo.png-8c1794712f723e8555b8c82a99dbad56.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/godot-utils/bb_code_helper/empty.png"
-dest_files=["res://.godot/imported/empty.png-2737f5f17bd2c929eedd00658eb69175.ctex"]
+source_file="res://addons/godot-utils/steam_wishlist_button/steam_logo.png"
+dest_files=["res://.godot/imported/steam_logo.png-8c1794712f723e8555b8c82a99dbad56.ctex"]
 
 [params]
 

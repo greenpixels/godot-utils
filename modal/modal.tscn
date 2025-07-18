@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ckwv2eoexg3f6"]
 
-[ext_resource type="Script" uid="uid://dg2b32ttk3mhl" path="res://ui/disclaimer/disclaimer.gd" id="1_ooc02"]
+[ext_resource type="Script" uid="uid://dg2b32ttk3mhl" path="res://addons/godot-utils/modal/modal.gd" id="1_qywp4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_un5s7"]
 bg_color = Color(0.129412, 0.129412, 0.160784, 1)
@@ -12,7 +12,7 @@ corner_radius_bottom_left = 8
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ooc02"]
 bg_color = Color(0, 0, 0, 0.271)
 
-[node name="Disclaimer" type="PanelContainer"]
+[node name="Modal" type="PanelContainer"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -25,7 +25,7 @@ offset_bottom = 156.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_un5s7")
-script = ExtResource("1_ooc02")
+script = ExtResource("1_qywp4")
 title = "TITLE"
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

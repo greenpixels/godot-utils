@@ -1,7 +1,7 @@
 class_name BBCodeHelper
 
 var content = ""
-var empty_image: Texture = preload("res://godot_tooltip_component_by_greenpixels/lib/util/bb_code_helper/empty.png")
+var empty_image: Texture = preload("res://addons/godot-utils/bb_code_helper/empty.png")
 
 static func build(_content: String) -> BBCodeHelper:
 	var instance = BBCodeHelper.new()
