@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://nse21cx3c1gw"]
+
+[ext_resource type="Script" uid="uid://cimcw167o7q0h" path="res://autoload/twitch_chat_connection/twitch_chat_connection.gd" id="1_wo4ja"]
+
+[node name="TwitchChatConnection" type="Node2D"]
+script = ExtResource("1_wo4ja")

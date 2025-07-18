@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvp2f2x2n6lwf"]
+
+[ext_resource type="Script" uid="uid://bcxwueuoksycy" path="res://ui/juicy_button_effect_on_parent/juicy_button_effect_on_parent.gd" id="1_rha4i"]
+
+[node name="JuicyButtonEffectOnParent" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_rha4i")

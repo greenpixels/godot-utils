@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgjad6ya8iurk"]
+
+[ext_resource type="Script" uid="uid://dj63f8behp0km" path="res://ui/wishlist_button/wishlist_button.gd" id="1_8sow5"]
+[ext_resource type="Texture2D" uid="uid://bomn0o6eknqd5" path="res://assets/images/steam_logo.png" id="1_cxete"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cxete"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="WishlistButton" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -107.5
+offset_right = -752.5
+offset_bottom = -526.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(253.5, 61)
+theme_override_styles/panel = SubResource("StyleBoxFlat_cxete")
+script = ExtResource("1_8sow5")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+flat = true
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 15
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_cxete")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="RichTextLabel" type="Label" parent="MarginContainer/HBoxContainer/CenterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 32
+text = "Wishlist the game on Steam"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

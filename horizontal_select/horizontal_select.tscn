@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsjawlphff3h2"]
+
+[ext_resource type="Script" uid="uid://chsbmlrkpl8dx" path="res://ui/horizontal_select/horizontal_select.gd" id="1_o7sul"]
+
+[node name="HorizontalSelect" type="HBoxContainer"]
+script = ExtResource("1_o7sul")
+
+[node name="ChevronLeft" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "<"
+
+[node name="Icon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Text" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "Placeholder"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChevronRight" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = ">"
+
+[connection signal="pressed" from="ChevronLeft" to="." method="_on_chevron_left_pressed"]
+[connection signal="pressed" from="ChevronRight" to="." method="_on_chevron_right_pressed"]
