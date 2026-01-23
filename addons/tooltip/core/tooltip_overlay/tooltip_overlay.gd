@@ -10,6 +10,8 @@ extends CanvasLayer
 @export var tooltip_transition_type: Tween.TransitionType = Tween.TRANS_ELASTIC
 ## Tween easing type used for tooltip show/hide animations.
 @export var tooltip_easing_type: Tween.EaseType = Tween.EASE_OUT
+## Offset from the cursor when using cursor-following mode.
+@export var cursor_offset: Vector2 = Vector2(16, 16)
 
 ## Preloaded tooltip scene used for creating explanation popover instances.
 var tooltip_scene: PackedScene = preload("res://addons/tooltip/core/tooltip/tooltip.tscn")
@@ -17,15 +19,25 @@ var tooltip_scene: PackedScene = preload("res://addons/tooltip/core/tooltip/tool
 var current_tooltip_element: Control = null
 ## Array of instantiated explanation tooltip nodes currently being displayed.
 var explanations: Array[Node] = []
+## Whether the tooltip is currently following the cursor.
+var _is_following_cursor: bool = false
 
 
 func _ready() -> void:
 	%LayoutWrapper.scale = Vector2(0, 1)
+	set_process(false)
+
+
+func _process(_delta: float) -> void:
+	if _is_following_cursor:
+		_update_cursor_position()
 
 
 ## Hides the tooltip overlay with a scale-out animation and disconnects from the current element.
 func conceal() -> void:
 	current_tooltip_element = null
+	_is_following_cursor = false
+	set_process(false)
 	TweenHelper.tween("tooltip_container_scale", %LayoutWrapper) \
 		.tween_property(%LayoutWrapper, "scale", Vector2(0, 1), 0.05) \
 		.set_trans(Tween.TRANS_SINE) \
@@ -37,15 +49,58 @@ func conceal() -> void:
 ## [param content]: The text content to display, supporting BBCode and placeholder keys.
 ## [param show_extra_explanation]: If true, displays additional explanation popovers for highlighted keys.
 func describe(origin_node: Control, content: String, show_extra_explanation: bool = false) -> void:
-	if current_tooltip_element != null:
-		current_tooltip_element.mouse_exited.disconnect(conceal)
-	current_tooltip_element = origin_node
-	if not current_tooltip_element.mouse_exited.is_connected(conceal):
-		current_tooltip_element.mouse_exited.connect(conceal)
+	_is_following_cursor = false
+	set_process(false)
+	_setup_tooltip_element(origin_node)
+	_prepare_tooltip_content(content, show_extra_explanation)
+	
 	var origin_x_position: float = 0
 	if origin_node:
 		origin_x_position = _get_screen_position(origin_node).x
 	var viewport_center_position: float = get_viewport().get_visible_rect().size.x / 2
+
+	if origin_x_position > viewport_center_position:
+		%LayoutWrapper.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_KEEP_WIDTH)
+	else:
+		%LayoutWrapper.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_KEEP_WIDTH)
+	
+	_animate_tooltip_in()
+
+
+## Displays a tooltip that follows the cursor position.
+## The tooltip automatically positions itself to avoid screen overflow.
+## [param origin_node]: The Control node that triggered the tooltip (used for mouse exit detection).
+## [param content]: The text content to display, supporting BBCode and placeholder keys.
+## [param show_extra_explanation]: If true, displays additional explanation popovers for highlighted keys.
+func describe_at_cursor(origin_node: Control, content: String, show_extra_explanation: bool = false) -> void:
+	_is_following_cursor = true
+	_setup_tooltip_element(origin_node)
+	_prepare_tooltip_content(content, show_extra_explanation)
+	
+	# Reset anchors for manual positioning
+	%LayoutWrapper.set_anchors_and_offsets_preset(Control.PRESET_TOP_LEFT, Control.PRESET_MODE_KEEP_SIZE)
+	
+	# Initial position update
+	_update_cursor_position()
+	
+	_animate_tooltip_in()
+	set_process(true)
+
+
+## Sets up the tooltip element connection for mouse exit detection.
+## [param origin_node]: The Control node to connect mouse exit signal from.
+func _setup_tooltip_element(origin_node: Control) -> void:
+	if current_tooltip_element != null and current_tooltip_element.mouse_exited.is_connected(conceal):
+		current_tooltip_element.mouse_exited.disconnect(conceal)
+	current_tooltip_element = origin_node
+	if current_tooltip_element and not current_tooltip_element.mouse_exited.is_connected(conceal):
+		current_tooltip_element.mouse_exited.connect(conceal)
+
+
+## Prepares the tooltip content, loading bar, and explanation fade-in animations.
+## [param content]: The text content to display.
+## [param show_extra_explanation]: If true, creates explanation popovers.
+func _prepare_tooltip_content(content: String, show_extra_explanation: bool) -> void:
 	%TooltipLoadingBar.value = 0
 	TweenHelper.tween("load_progress", %TooltipLoadingBar) \
 		.tween_property(%TooltipLoadingBar, "value", 0, 0)
@@ -62,16 +117,54 @@ func describe(origin_node: Control, content: String, show_extra_explanation: boo
 			.tween_property(explanation, "modulate", current_modulate, 0.15) \
 			.set_delay(explanations_delay)
 
-	if origin_x_position > viewport_center_position:
-		%LayoutWrapper.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_KEEP_WIDTH)
-	else:
-		%LayoutWrapper.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_KEEP_WIDTH)
+
+## Animates the tooltip container scaling in.
+func _animate_tooltip_in() -> void:
 	%TooltipContainer.scale = Vector2(1, 1)
 	%LayoutWrapper.scale = Vector2(0, 1)
 	TweenHelper.tween("tooltip_container_scale", %LayoutWrapper) \
 		.tween_property(%LayoutWrapper, "scale", Vector2(1, 1), 0.25) \
 		.set_trans(tooltip_transition_type) \
 		.set_ease(tooltip_easing_type)
+
+
+## Updates the tooltip position to follow the cursor, avoiding screen overflow.
+func _update_cursor_position() -> void:
+	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	var tooltip_size: Vector2 = %LayoutWrapper.size
+	
+	# Calculate available space in each direction
+	var space_right: float = viewport_size.x - mouse_pos.x
+	var space_left: float = mouse_pos.x
+	var space_bottom: float = viewport_size.y - mouse_pos.y
+	var space_top: float = mouse_pos.y
+	
+	var target_pos: Vector2 = mouse_pos
+	
+	# Determine horizontal position
+	if space_right >= tooltip_size.x + cursor_offset.x:
+		# Place to the right of cursor
+		target_pos.x = mouse_pos.x + cursor_offset.x
+	elif space_left >= tooltip_size.x + cursor_offset.x:
+		# Place to the left of cursor
+		target_pos.x = mouse_pos.x - tooltip_size.x - cursor_offset.x
+	else:
+		# Not enough space on either side, clamp to viewport
+		target_pos.x = clampf(mouse_pos.x + cursor_offset.x, 0, viewport_size.x - tooltip_size.x)
+	
+	# Determine vertical position
+	if space_bottom >= tooltip_size.y + cursor_offset.y:
+		# Place below cursor
+		target_pos.y = mouse_pos.y + cursor_offset.y
+	elif space_top >= tooltip_size.y + cursor_offset.y:
+		# Place above cursor
+		target_pos.y = mouse_pos.y - tooltip_size.y - cursor_offset.y
+	else:
+		# Not enough space, clamp to viewport
+		target_pos.y = clampf(mouse_pos.y + cursor_offset.y, 0, viewport_size.y - tooltip_size.y)
+	
+	%LayoutWrapper.position = target_pos
 
 
 ## Applies BBCode formatting to content by replacing placeholder keys with styled text.
