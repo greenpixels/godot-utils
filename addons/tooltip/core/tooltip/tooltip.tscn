@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbh6jrpcqwj76"]
+[gd_scene load_steps=4 format=3 uid="uid://dbh6jrpcqwj76"]
+
+[ext_resource type="Script" uid="uid://bxttou50rulqi" path="res://addons/tooltip/core/tooltip/tooltip.gd" id="1_iv46h"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i4kne"]
 
@@ -17,6 +19,7 @@ offset_right = 500.0
 offset_bottom = 55.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_i4kne")
+script = ExtResource("1_iv46h")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
