@@ -63,7 +63,7 @@ func describe(origin_node: Control, content: String, show_extra_explanation: boo
 			.set_delay(explanations_delay)
 
 	if origin_x_position > viewport_center_position:
-		%LayoutWrapper.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_KEEP_WIDTH)s
+		%LayoutWrapper.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT, Control.PRESET_MODE_KEEP_WIDTH)
 	else:
 		%LayoutWrapper.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_RIGHT, Control.PRESET_MODE_KEEP_WIDTH)
 	%TooltipContainer.scale = Vector2(1, 1)
