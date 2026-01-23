@@ -13,9 +13,11 @@ static func tween(reference_name: String, origin_node: Node, should_cleanup_on_f
 	if tweens_dict.has(key) and (tweens_dict[key] as Tween).is_running():
 		(tweens_dict[key] as Tween).kill()
 	var tween: Tween = origin_node.create_tween()
-	tween.finished.connect(tween.kill)
+	
 	tweens_dict[key] = origin_node.create_tween()
 	tweens_dict[key].set_process_mode(process_mode)
+	if should_cleanup_on_finish:
+		tween.finished.connect.call_deferred(_handle_tween_finished, CONNECT_ONE_SHOT)
 	return tweens_dict[key]
 
 static func _handle_tween_finished(tween: Tween, key: String):
