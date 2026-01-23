@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://dbu7cb0h10jdt"]
+
+[ext_resource type="PackedScene" uid="uid://dbh6jrpcqwj76" path="res://addons/tooltip/core/tooltip/tooltip.tscn" id="1_2rq01"]
+[ext_resource type="Script" uid="uid://fynoi3rbj8kb" path="res://addons/tooltip/core/tooltip_overlay/tooltip_overlay.gd" id="1_w16vr"]
+[ext_resource type="Script" uid="uid://d15ib6snxn55r" path="res://addons/tooltip/core/resources/tooltip_highlighted_key.gd" id="2_4xwct"]
+[ext_resource type="Script" uid="uid://c2f4gxienkpu6" path="res://addons/tooltip/core/resources/tooltip_explanation.gd" id="3_ha7rk"]
+
+[sub_resource type="Resource" id="Resource_4tqpa"]
+script = ExtResource("3_ha7rk")
+metadata/_custom_type_script = "uid://c2f4gxienkpu6"
+
+[sub_resource type="Resource" id="Resource_gm5ek"]
+script = ExtResource("2_4xwct")
+explanation = SubResource("Resource_4tqpa")
+metadata/_custom_type_script = "uid://d15ib6snxn55r"
+
+[node name="TooltipOverlay" type="CanvasLayer"]
+physics_interpolation_mode = 1
+layer = 5
+script = ExtResource("1_w16vr")
+highlighted_keys = Array[ExtResource("2_4xwct")]([SubResource("Resource_gm5ek")])
+
+[node name="LayoutWrapper" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+physics_interpolation_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -401.0
+offset_top = -101.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+metadata/_edit_group_ = true
+
+[node name="TooltipContainer" type="VBoxContainer" parent="LayoutWrapper"]
+unique_name_in_owner = true
+physics_interpolation_mode = 1
+layout_mode = 2
+size_flags_vertical = 8
+mouse_filter = 2
+
+[node name="MainTooltip" parent="LayoutWrapper/TooltipContainer" instance=ExtResource("1_2rq01")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TooltipLoadingBar" type="ProgressBar" parent="LayoutWrapper/TooltipContainer/MainTooltip"]
+unique_name_in_owner = true
+physics_interpolation_mode = 1
+visible = false
+layout_mode = 2
+mouse_filter = 2
+show_percentage = false

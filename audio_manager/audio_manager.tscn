@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cb1h10j5d82q1"]
-
-[ext_resource type="Script" uid="uid://dhb08tdp634nr" path="res://addons/godot-utils/audio_manager/audio_manager.gd" id="1_418ss"]
-
-[node name="AudioManager" type="Node"]
-process_mode = 3
-script = ExtResource("1_418ss")
