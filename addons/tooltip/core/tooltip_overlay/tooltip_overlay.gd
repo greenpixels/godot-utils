@@ -130,7 +130,7 @@ func __cleanup() -> void:
 	explanations = []
 
 
-## Returns the screen position of a control, accounting for nested viewports.
+## Returns the screen position of a control, accounting for nested viewports and cameras.
 ## Traverses up through any SubViewports to calculate the actual screen position.
 ## [param control]: The control to get the screen position for.
 ## [returns]: The control's position in main window screen coordinates.
@@ -138,14 +138,27 @@ func _get_screen_position(control: Control) -> Vector2:
 	var position: Vector2 = control.global_position
 	var viewport: Viewport = control.get_viewport()
 	
+	# Account for camera offset within the control's viewport
+	var camera: Camera2D = viewport.get_camera_2d()
+	if camera:
+		position = position - camera.get_screen_center_position() + viewport.get_visible_rect().size / 2
+	
 	# Traverse up through nested viewports until we reach the root
 	while viewport and viewport != get_tree().root:
 		var viewport_parent: Node = viewport.get_parent()
 		if viewport_parent is SubViewportContainer:
 			# Account for the SubViewportContainer's position and any scaling
 			var container: SubViewportContainer = viewport_parent
-			position = position * container.get_transform().get_scale() + container.global_position
+			var scale: Vector2 = Vector2.ONE
+			if container.stretch:
+				scale = container.size / Vector2(viewport.size)
+			position = position * scale + container.global_position
 			viewport = container.get_viewport()
+			
+			# Check for camera in the parent viewport as well
+			camera = viewport.get_camera_2d()
+			if camera:
+				position = position - camera.get_screen_center_position() + viewport.get_visible_rect().size / 2
 		else:
 			break
 	
