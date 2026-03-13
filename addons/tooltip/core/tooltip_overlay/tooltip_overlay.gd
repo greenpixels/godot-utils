@@ -129,9 +129,16 @@ func _setup_tooltip_element(origin_node: Control) -> void:
 		and current_tooltip_element.mouse_exited.is_connected(conceal)
 	):
 		current_tooltip_element.mouse_exited.disconnect(conceal)
+	if (
+		current_tooltip_element != null
+		and current_tooltip_element.focus_exited.is_connected(conceal)
+	):
+		current_tooltip_element.focus_exited.disconnect(conceal)
 	current_tooltip_element = origin_node
 	if current_tooltip_element and not current_tooltip_element.mouse_exited.is_connected(conceal):
 		current_tooltip_element.mouse_exited.connect(conceal)
+	if current_tooltip_element and not current_tooltip_element.focus_exited.is_connected(conceal):
+		current_tooltip_element.focus_exited.connect(conceal)
 
 
 ## Prepares the tooltip content, loading bar, and explanation fade-in animations.
