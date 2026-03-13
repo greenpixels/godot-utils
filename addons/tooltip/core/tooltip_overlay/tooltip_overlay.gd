@@ -354,6 +354,8 @@ func _get_screen_position(control: Control) -> Vector2:
 			viewport = container.get_viewport()
 
 			# Check for camera in the parent viewport as well
+			if viewport == null:
+				break
 			camera = viewport.get_camera_2d()
 			if camera:
 				position = (
