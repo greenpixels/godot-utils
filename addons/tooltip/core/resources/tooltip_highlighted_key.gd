@@ -1,5 +1,5 @@
-extends Resource
 class_name TooltipHighlightedKey
+extends Resource
 
 @export var key: String = ""
 @export var icon: Texture2D
