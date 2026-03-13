@@ -331,8 +331,12 @@ func __cleanup() -> void:
 ## [param control]: The control to get the screen position for.
 ## [returns]: The control's position in main window screen coordinates.
 func _get_screen_position(control: Control) -> Vector2:
+	if not is_instance_valid(control):
+		return Vector2.ZERO
 	var position: Vector2 = control.global_position
 	var viewport: Viewport = control.get_viewport()
+	if viewport == null:
+		return position
 
 	# Account for camera offset within the control's viewport
 	var camera: Camera2D = viewport.get_camera_2d()
