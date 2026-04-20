@@ -401,10 +401,10 @@ func _get_transformed_screen_rect(canvas_item: CanvasItem, local_rect: Rect2) ->
 	)
 	var bottom_right: Vector2 = _get_canvas_point_screen_position(canvas_item, local_rect.end)
 
-	var min_x: float = minf(top_left.x, top_right.x, bottom_left.x, bottom_right.x)
-	var min_y: float = minf(top_left.y, top_right.y, bottom_left.y, bottom_right.y)
-	var max_x: float = maxf(top_left.x, top_right.x, bottom_left.x, bottom_right.x)
-	var max_y: float = maxf(top_left.y, top_right.y, bottom_left.y, bottom_right.y)
+	var min_x: float = minf(minf(top_left.x, top_right.x), minf(bottom_left.x, bottom_right.x))
+	var min_y: float = minf(minf(top_left.y, top_right.y), minf(bottom_left.y, bottom_right.y))
+	var max_x: float = maxf(maxf(top_left.x, top_right.x), maxf(bottom_left.x, bottom_right.x))
+	var max_y: float = maxf(maxf(top_left.y, top_right.y), maxf(bottom_left.y, bottom_right.y))
 
 	return Rect2(Vector2(min_x, min_y), Vector2(max_x - min_x, max_y - min_y))
 
